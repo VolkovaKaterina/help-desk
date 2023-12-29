@@ -23,6 +23,7 @@ const EditTicket = async ({ params }: IEditTicketProps) => {
 export default EditTicket;
 
 export async function generateStaticParams() {
+  "use server";
   const tickets = await prisma.ticket.findMany();
 
   return tickets.map((ticket: Ticket) => {
