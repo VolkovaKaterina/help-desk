@@ -8,7 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { createTicketSchema } from "@/app/schemas/ticketsFormSchema";
 import { useRouter } from "next/navigation";
 import { createTicket } from "@/app/services/api.service";
-import CreteTicketForm from "@/components/user/CreteTicketForm";
+import CreteTicketForm from "@/components/user-request/CreteTicketForm";
 
 type FormData = z.infer<typeof createTicketSchema>;
 

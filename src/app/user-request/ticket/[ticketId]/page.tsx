@@ -4,8 +4,8 @@ import { Ticket } from ".prisma/client";
 
 import { TicketStatus } from "@/components/admin/TicketsTable/TicketsTable.models";
 import { notFound } from "next/navigation";
-import TicketSkeleton from "@/components/user/TicketSkeleton";
-import TicketInfo from "@/components/user/TicketInfo";
+import TicketSkeleton from "@/components/user-request/TicketSkeleton";
+import TicketInfo from "@/components/user-request/TicketInfo";
 import { getTicket, updateTicketWithAI } from "@/app/services/api.service";
 
 interface ITicketInfoPageProps {
