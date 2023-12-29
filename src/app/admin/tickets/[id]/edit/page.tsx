@@ -1,7 +1,6 @@
 import { notFound } from "next/navigation";
 import EditTicketForm from "@/components/admin/EditTicketForm";
 import prisma from "@/libs/db";
-import { Ticket } from ".prisma/client";
 
 interface IEditTicketProps {
   params: {
@@ -21,14 +20,3 @@ const EditTicket = async ({ params }: IEditTicketProps) => {
 };
 
 export default EditTicket;
-
-export async function generateStaticParams() {
-  "use server";
-  const tickets = await prisma.ticket.findMany();
-
-  return tickets.map((ticket: Ticket) => {
-    return {
-      id: ticket.id.toString(),
-    };
-  });
-}
