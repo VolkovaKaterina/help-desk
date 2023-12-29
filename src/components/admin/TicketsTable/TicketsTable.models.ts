@@ -12,3 +12,8 @@ export enum TicketStatus {
   NEW = "New",
   RESOLVED = "Resolved",
 }
+
+export enum DirectContact {
+  YES = "YES",
+  NO = "NO",
+}

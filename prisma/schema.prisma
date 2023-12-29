@@ -10,14 +10,19 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum DirectContact {
+  YES
+  NO
+}
+
 model Ticket {
-  id                String   @id @default(auto()) @map("_id") @db.ObjectId
+  id                String        @id @default(auto()) @map("_id") @db.ObjectId
   name              String
   email             String
   description       String
-  status            String   @default("New")
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
+  status            String        @default("New")
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
   adminResponse     String?
-  needDirectContact String   @default("NO")
+  needDirectContact DirectContact @default(NO)
 }

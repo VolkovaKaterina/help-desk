@@ -1,12 +1,13 @@
 "use server";
 import prisma from "@/libs/db";
 import { editTicketSchema } from "@/app/schemas/ticketsFormSchema";
+import { DirectContact } from ".prisma/client";
 
 interface EditTicketFormData {
   id: string;
   status: string;
   adminResponse: string;
-  needDirectContact?: string;
+  needDirectContact?: DirectContact;
 }
 
 export const editTicket = async (formData: EditTicketFormData) => {
@@ -23,7 +24,7 @@ export const editTicket = async (formData: EditTicketFormData) => {
         status: result.data.status,
         adminResponse: result.data.adminResponse,
         updatedAt: new Date(),
-        needDirectContact: result.data.needDirectContact,
+        needDirectContact: result.data.needDirectContact as DirectContact,
       },
     });
   } catch (error) {

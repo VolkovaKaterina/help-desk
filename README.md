@@ -28,7 +28,7 @@ This application is a help desk system built with Next.js, Prisma, MongoDB, and 
 ---
 ## Development and Setup
 ### Prerequisites
-- Node.js and npm installed.
+- Node.js version >= v18.17.0 is required.
 - MongoDB database.
 - OpenAI API key.
 

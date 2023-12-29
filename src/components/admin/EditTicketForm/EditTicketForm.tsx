@@ -6,7 +6,7 @@ import Link from "next/link";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/navigation";
-import { Ticket } from ".prisma/client";
+import { DirectContact, Ticket } from ".prisma/client";
 import {
   backToAdminPath,
   toastrMessage,
@@ -41,7 +41,7 @@ const EditTicketForm: React.FC<ITicketEditPageProps> = ({ ticket }) => {
         id: formTicket.id,
         status: data.status,
         adminResponse: data.adminResponse,
-        needDirectContact: data.needDirectContact,
+        needDirectContact: data.needDirectContact as DirectContact,
       });
 
       router.push(backToAdminPath);

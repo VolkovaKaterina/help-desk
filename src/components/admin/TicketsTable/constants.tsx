@@ -3,10 +3,33 @@ import { MRT_ColumnDef, MRT_Row } from "material-react-table";
 import { Ticket } from ".prisma/client";
 import { MenuItem } from "@mui/material";
 import Link from "next/link";
-import { Button } from "@nextui-org/react";
+import { Button, Chip } from "@nextui-org/react";
 import React from "react";
-import { TicketStatus } from "@/components/admin/TicketsTable/TicketsTable.models";
+import {
+  DirectContact,
+  TicketStatus,
+} from "@/components/admin/TicketsTable/TicketsTable.models";
 import StatusChip from "@/components/shared/StatusChip";
+
+const ResponseChip = ({
+  value,
+  yesLabel = "Yes",
+  noLabel = "No",
+}: {
+  value: boolean;
+  yesLabel?: string;
+  noLabel?: string;
+}) => {
+  return value ? (
+    <Chip color="success" variant="flat">
+      {yesLabel}
+    </Chip>
+  ) : (
+    <Chip color="warning" variant="flat">
+      {noLabel}
+    </Chip>
+  );
+};
 
 export const columns = [
   {
@@ -29,6 +52,20 @@ export const columns = [
     ),
   },
   {
+    accessorKey: "adminResponse",
+    header: "Admin Response",
+    Cell: ({ renderedCellValue }: { renderedCellValue: TicketStatus }) => (
+      <ResponseChip value={!!renderedCellValue} />
+    ),
+  },
+  {
+    accessorKey: "needDirectContact",
+    header: "Want to speak with consultant",
+    Cell: ({ renderedCellValue }: { renderedCellValue: string }) => (
+      <ResponseChip value={renderedCellValue === DirectContact.YES} />
+    ),
+  },
+  {
     accessorKey: "createdAt",
     header: "Created At",
     Cell: ({ renderedCellValue }: { renderedCellValue: string }) =>
@@ -39,16 +76,6 @@ export const columns = [
     header: "Updated At",
     Cell: ({ renderedCellValue }: { renderedCellValue: string }) =>
       new Date(renderedCellValue).toLocaleDateString("en-US"),
-  },
-  {
-    accessorKey: "adminResponse",
-    header: "Admin Response",
-    Cell: ({ renderedCellValue }: { renderedCellValue: string }) =>
-      renderedCellValue ? "Yes" : "No",
-  },
-  {
-    accessorKey: "needDirectContact",
-    header: "Want to speak with consultant",
   },
 ] as MRT_ColumnDef<Ticket>[];
 
