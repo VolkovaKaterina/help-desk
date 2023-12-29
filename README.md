@@ -1,25 +1,66 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+# Help Desk Application README
 
-First, run the development server:
+---
+
+## Overview
+This application is a help desk system built with Next.js, Prisma, MongoDB, and integrated with OpenAI for automated admin responses. It is designed to handle ticket requests from end users and allow support staff to manage these tickets.
+
+---
+### Key Features
+#### User
+- **Ticket Submission (User Page)**: End users can submit ticket requests, providing their name, email, and a description of the issue they are facing.
+- **Ticket Tracking:** After submission, users are redirected to a page where they can view the status and responses to their ticket, interact with automated responses provided by OpenAI, and submit further responses or request direct consultations.
+#### Admin Panel: 
+- **Support staff** can view summaries of each ticket, including their statuses, and can drill down into individual tickets to respond and update their status. Possible statuses include “new”, “in progress”, and “resolved”.
+- **Automated Responses**: The system utilizes OpenAI to generate automated responses for the admin panel, aiding in quick and efficient ticket resolution.
+- **Direct Contact Indicator**: Identifies tickets where users have requested direct communication with a consultant.
+
+---
+### Preferred authentication stack: 
+#### NextAuth
+- ***Integration***: Tailored for Next.js applications.
+- ***Multiple Providers***: Supports various authentication providers for flexibility.
+- ***JWT Tokens***: Ensures secure and scalable user sessions.
+- ***Use Cases***: Ideal for rapid development and when integrating third-party identity providers is beneficial.
+
+---
+## Development and Setup
+### Prerequisites
+- Node.js version >= v18.17.0 is required.
+- MongoDB database.
+- OpenAI API key.
+
+### Configuration
+- Create a .env file in the project root with:
+```
+DATABASE_URL: Your MongoDB connection string.
+OPENAI_API_KEY: Your OpenAI API ke
+```
+### Running the Application
+```bash
+npm install
+```
+```bash
+npx prisma generate 
+```
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
+---
+## Building for Production
+```bash
+npm run build
+```
+```bash
+npm run start
+```
+---
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
