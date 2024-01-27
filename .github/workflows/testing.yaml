@@ -1,4 +1,4 @@
-name: Tests and Slack Notification
+name: Tests
 
 on: [push]
 
@@ -15,9 +15,10 @@ jobs:
       uses: actions/setup-node@v3
     - name: Install dependencies
       run: npm install
+    - name: Build
+      run: npm run build
     - name: Run tests
       run: npm test
-    # This step ensures the job status is available for the next job
     - name: Set job status
       if: ${{ always() }}
       run: echo "TESTS_STATUS=${{ job.status }}" >> $GITHUB_ENV
