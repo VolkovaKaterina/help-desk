@@ -1,0 +1,23 @@
+name: Tests and Slack Notification
+
+on: [push]
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [20.x]
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+    - name: Install dependencies
+      run: npm install
+    - name: Run tests
+      run: npm test
+    # This step ensures the job status is available for the next job
+    - name: Set job status
+      if: ${{ always() }}
+      run: echo "TESTS_STATUS=${{ job.status }}" >> $GITHUB_ENV
