@@ -29,6 +29,19 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y google-chrome-stable
 
+      - name: Get Chrome version
+        run: |
+          CHROME_VERSION=$(google-chrome --version | cut -d ' ' -f 3 | cut -d '.' -f 1)
+          echo "CHROME_VERSION=${CHROME_VERSION}" >> $GITHUB_ENV
+
+      - name: Install matching ChromeDriver
+        run: |
+          CHROMEDRIVER_VERSION=$(curl -s "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_${{ env.CHROME_VERSION }}")
+          curl -L -O "https://chromedriver.storage.googleapis.com/${CHROMEDRIVER_VERSION}/chromedriver_linux64.zip"
+          unzip chromedriver_linux64.zip
+          sudo mv chromedriver /usr/local/bin/
+          rm chromedriver_linux64.zip
+
       - name: Build application
         run: npm run build
 
@@ -36,10 +49,6 @@ jobs:
         run: npm start &
         env:
           CI: true
-      - name: Update WebDriver
-        run: npx webdriver-manager update
-      - name: Start WebDriver
-        run: npx webdriver-manager start &
 
       - name: Run Selenium tests
         run: npm run test:e2e
