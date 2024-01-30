@@ -5,6 +5,12 @@ on: [push]
 jobs:
   tests:
     runs-on: ubuntu-latest
+    services:
+      selenium:
+        image: selenium/standalone-chrome:latest
+        ports:
+          - 4444:4444
+        options: --shm-size=2gb
     env:
       OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
@@ -12,18 +18,29 @@ jobs:
       matrix:
         node-version: [20.x]
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-    - name: Install dependencies
-      run: npm install
-    - name: Build
-      run: npm run build
-    - name: Start
-      run: npm run start&
-    - name: Run tests
-      run: npm test
-    - name: Set job status
-      if: ${{ always() }}
-      run: echo "TESTS_STATUS=${{ job.status }}" >> $GITHUB_ENV
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build
+        run: npm run build
+
+      - name: Start
+        run: npm run start&
+
+      - name: Run tests
+        run: npm test
+
+      - name: Run end-to-end tests
+        run: npm run test:e2e
+
+      - name: Set job status
+        if: always()
+        run: echo "TESTS_STATUS=${{ job.status }}" >> $GITHUB_ENV

@@ -14,7 +14,7 @@ const config = {
   testEnvironment: "jest-environment-jsdom",
   setupFiles: ['whatwg-fetch'],
   setupFilesAfterEnv: ["<rootDir>/jest.setup.js"],
-  testPathIgnorePatterns: ["<rootDir>/node_modules/", "<rootDir>/.next/"],
+  testPathIgnorePatterns: ["<rootDir>/node_modules/", "<rootDir>/.next/", "/e2etest/"],
   moduleNameMapper: {
     "^@/(.*)$": "<rootDir>/src/$1",
     "^@/app/(.*)$": "<rootDir>/src/app/$1",
