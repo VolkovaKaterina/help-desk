@@ -8,7 +8,6 @@ jobs:
     strategy:
       matrix:
         node-version: [20.x]
-        browser: [ 'chrome']
     env:
       OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
@@ -29,14 +28,6 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Install ChromeDriver
-        run: |
-          CHROME_VERSION=$(google-chrome-stable --version | awk '{print $3}' | cut -d. -f1)
-          wget -N https://chromedriver.storage.googleapis.com/$CHROME_VERSION/chromedriver_linux64.zip
-          unzip chromedriver_linux64.zip
-          chmod +x chromedriver
-          sudo mv chromedriver /usr/local/bin/
-
       - name: Build application
         run: npm run build
 
@@ -47,8 +38,6 @@ jobs:
 
       - name: Run Selenium tests
         run: npm run test:e2e
-        env:
-          BROWSER: chrome
 
       - name: Set job status
         if: always()
