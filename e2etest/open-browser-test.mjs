@@ -1,4 +1,5 @@
 import { Builder } from 'selenium-webdriver';
+import * as chrome from 'selenium-webdriver/chrome.js';
 import { describe, it, before, after } from 'mocha';
 
 describe('Open Browser Test', function() {
@@ -6,7 +7,16 @@ describe('Open Browser Test', function() {
   let driver;
 
   before(async function() {
-    driver = await new Builder().forBrowser('chrome').build();
+    let options = new chrome.Options();
+    options.addArguments('--headless');
+    options.addArguments('--disable-gpu');
+    options.addArguments('--no-sandbox');
+    options.addArguments('--disable-dev-shm-usage');
+
+    driver = await new Builder()
+    .forBrowser('chrome')
+    .setChromeOptions(options)
+    .build();
   });
 
   after(async function() {
@@ -14,7 +24,6 @@ describe('Open Browser Test', function() {
   });
 
   it('should open Chrome browser and load localhost:3000', async function() {
-
     await driver.get('http://localhost:3000');
   });
 });
