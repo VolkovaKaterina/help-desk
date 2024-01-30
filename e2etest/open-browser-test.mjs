@@ -1,4 +1,5 @@
 import { Builder } from 'selenium-webdriver';
+import chrome from 'selenium-webdriver/chrome';
 import { describe, it, before, after } from 'mocha';
 
 describe('Open Browser Test', function() {
