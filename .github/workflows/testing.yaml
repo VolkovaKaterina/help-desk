@@ -24,17 +24,16 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Install Chrome
+      - name: Install latest Chrome
         run: |
           sudo apt-get update
           sudo apt-get install -y google-chrome-stable
 
-      - name: Install ChromeDriver
-        run: |
-          wget -N https://chromedriver.storage.googleapis.com/120.0.0/chromedriver_linux64.zip
-          unzip chromedriver_linux64.zip
-          sudo mv chromedriver /usr/local/bin/
-          rm chromedriver_linux64.zip
+      - name: Update WebDriver
+        run: npx webdriver-manager update
+
+      - name: Start WebDriver
+        run: npx webdriver-manager start &
 
       - name: Build application
         run: npm run build
