@@ -1,59 +1,32 @@
-name: Selenium Tests
+name: E2E Test
 
 on: [push]
 
 jobs:
-  e2e-tests:
+  tests:
     runs-on: ubuntu-latest
-
     strategy:
       matrix:
         node-version: [20.x]
-        browser: [ 'chrome']
     env:
       OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
-    services:
-      selenium:
-        image: selenium/standalone-chrome
-        options: --shm-size=2gb
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+      - name: Start selenoid
+        uses: Xotabu4/selenoid-github-action@v2
+      - name: Checkout
+        uses: actions/checkout@v3
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
-
       - name: Install dependencies
         run: npm install
-
-      - name: Install Google Chrome
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y google-chrome-stable
-
-      - name: Install Latest ChromeDriver
-        run: |
-          wget -N https://chromedriver.storage.googleapis.com/LATEST_RELEASE/chromedriver_linux64.zip
-          unzip chromedriver_linux64.zip
-          sudo mv chromedriver /usr/local/bin/
-          sudo chmod +x /usr/local/bin/chromedriver
-
-      - name: Build application
+      - name: Build the project
         run: npm run build
-
-      - name: Start application
+      - name: Start the project
         run: npm start &
-        env:
-          CI: true
-
-      - name: Run Selenium tests
+      - name: Run end-to-end tests
         run: npm run test:e2e
-        env:
-          BROWSER: chrome
 
       - name: Set job status
         if: always()
