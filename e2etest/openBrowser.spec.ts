@@ -1,5 +1,5 @@
 import { Builder, WebDriver } from "selenium-webdriver";
-import { describe, it, before, after } from "mocha";
+import { describe, test, before, after } from "mocha";
 import { Options } from "selenium-webdriver/chrome";
 
 describe("Open Browser Test", function () {
@@ -26,7 +26,7 @@ describe("Open Browser Test", function () {
     await driver.quit();
   });
 
-  it("should open Chrome browser and load localhost:3000", async function () {
+  test("should open Chrome browser and load localhost:3000", async function () {
     await driver.get("http://localhost:3000");
   });
 });
